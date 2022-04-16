@@ -1,49 +1,85 @@
 var userFormEl = document.querySelector("#user-form");
 var cityInputEl = document.querySelector("#city-search");
 var currentWeather = document.querySelector("#current-city-weath")
+var submitButton = document.querySelector("#submit-button")
 
-var formSubmitHandler = function(event) {
-    //prevent page from refreshing
-    event.preventDefault();
+
+//button click
+var formSubmitHandler = function () {
+
     //get value from input element
     var cityname = cityInputEl.value.trim()
 
     if (cityname) {
-        getCityWeather(cityname);
-    
         // clear old content
         currentWeather.textContent = "";
-        
-      } else {
+
+        getCityWeather();
+
+    } else {
+        //alert user
         alert("Please enter a City name");
-      }
+    }
 
 }
+//get latitude/longitude     
+var getCityWeather = function () {
 
-var getCityWeather = function() {
+    var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + location + "&limit=1&appid=d605dacbb35ec2fe801548d6b8c17a0d";
 
-     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=d605dacbb35ec2fe801548d6b8c17a0d";
+    fetch(apiUrl)
+        .then(function (response) {
 
-     fetch(apiUrl)
-     .then (function(response) {
-
-        if (response.ok)  {
-            console.log(response)
-            response.json().then(function(data) {
-                console.log(data)
+            if (response.ok) {
+                console.log(response)
+                return response.json()
             }
-     )}
-    })
+
+        })
+        .then(function (data) {
+            console.log(data)
+
+            var latitude = data[0].lat;
+            var longitude = data[0].lon;
+
+            displayWeather(latitude,longitude, location);
+
+
+        })
 }
+submitButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    formSubmitHandler();
 
-var displayWeather = function() {
+})
 
-}
 
-var getForecast = function() {
-
-}
-
-var DisplayForecast = function() {
+//display weather
+var displayWeather = function (latitude, longitude, location) {
     
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&appid=d605dacbb35ec2fe801548d6b8c17a0d";
+    
+    fetch(apiUrl)
+      .then(function (response) {
+
+        if (response.ok) {
+            console.log(response)
+            return response.json()
+        
+            .then(function (data) {
+            displayWeather(data)
+            })
+
+       
+
+    }})
 }
+    
+
+
+// var getForecast = function() {
+
+// }
+
+// var DisplayForecast = function() {
+

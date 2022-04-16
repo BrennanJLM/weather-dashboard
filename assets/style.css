@@ -3,3 +3,7 @@ header {
     text-align: center;
     border: 5px blue solid;
 }
+
+div {
+    border: solid 2px red;
+}

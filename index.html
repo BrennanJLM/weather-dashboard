@@ -20,12 +20,12 @@
         <div class="card">
           <h3 class="card-header text-bold">Search for a City:</h3>
           <form id="user-form" class="card-body">
-            <input name="city-search" id="user-form"" type="text" autofocus="true" class="form-input" placeholder="Toronto"/>
-            <button type="submit" class="btn">Search</button>
+            <input name="city-search" id="city-search" type="text" autofocus="true" class="form-input" placeholder="Toronto"/>
+            <button id="submit-button" type="submit" class="btn">Search</button>
           </form>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="row-md-4">
         <div id="current-city-weath"></div>
     </div>
     <div class="col-md-3">
@@ -33,7 +33,7 @@
     </div>
 </main>
   
-<script src="https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=d605dacbb35ec2fe801548d6b8c17a0d"></script>    
+
 <script src="./assets/script.js"></script>    
 </body>
 
