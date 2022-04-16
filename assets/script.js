@@ -82,4 +82,3 @@ var displayWeather = function (latitude, longitude, location) {
 // }
 
 // var DisplayForecast = function() {
-
