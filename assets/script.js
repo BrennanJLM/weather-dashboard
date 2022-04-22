@@ -84,7 +84,7 @@ var displayWeather = async function(latitude, longitude) {
             temp.textContent= "Temp: " + Math.round(data.daily[i].temp.day) + " °C";
             wind.textContent= "Wind: " + mph(data.daily[i].wind_speed) + " KPH";
             humidity.textContent= "Humidity: " + data.daily[i].humidity + "%";
-			document.querySelector('#current-city-5day ul').appendChild(card1.cloneNode(true));
+            document.querySelector('#current-city-5day ul').appendChild(card1.cloneNode(true));
 			document.querySelector('#current-city-5day ul').appendChild(card1.cloneNode(true));
 			document.querySelector('#current-city-5day ul').appendChild(card1.cloneNode(true));
 			document.querySelector('#current-city-5day ul').appendChild(card1.cloneNode(true));
