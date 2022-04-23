@@ -79,15 +79,40 @@ var displayWeather = async function(latitude, longitude) {
 			//<li class="card d-inline-block"><h4 class="card-header">Day 2</h4></li>
 			
 			document.querySelector('#current-city-5day ul').appendChild(card1);
-            date.textContent=moment.unix(data.daily[i].dt).format("L");
-            icon.innerHTML="<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png'>";
-            temp.textContent= "Temp: " + Math.round(data.daily[i].temp.day) + " °C";
-            wind.textContent= "Wind: " + mph(data.daily[i].wind_speed) + " KPH";
-            humidity.textContent= "Humidity: " + data.daily[i].humidity + "%";
             document.querySelector('#current-city-5day ul').appendChild(card1.cloneNode(true));
 			document.querySelector('#current-city-5day ul').appendChild(card1.cloneNode(true));
 			document.querySelector('#current-city-5day ul').appendChild(card1.cloneNode(true));
 			document.querySelector('#current-city-5day ul').appendChild(card1.cloneNode(true));
+
+            // Define the addItem() function
+        // to be called through onclick
+        function addItem() {
+  
+            // Get type of element from form
+            let type = document.
+                getElementById("type").value;
+  
+            // Get the text/value for the tag
+            // from the form
+            let value = document.
+                getElementById("value").value;
+  
+            // createElement() is used for
+            // creating a new element
+            type
+                = document.createElement(type);
+  
+            // Use value as textnode in this example
+            type.appendChild(
+                document.createTextNode(value));
+  
+            // Append as child to the parent
+            // tag i.e. ol
+            document.getElementById(
+                "parent").appendChild(type);
+
+            }
+
         })
 		.catch(function(err) {
 			console.log(err);
@@ -103,3 +128,9 @@ var displayWeather = async function(latitude, longitude) {
 // }
 
 // var DisplayForecast = function() {
+
+    // date.textContent=moment.unix(data.daily[i].dt).format("L");
+    // icon.innerHTML="<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png'>";
+    // temp.textContent= "Temp: " + Math.round(data.daily[i].temp.day) + " °C";
+    // wind.textContent= "Wind: " + kph(data.daily[i].wind_speed) + " KPH";
+    // humidity.textContent= "Humidity: " + data.daily[i].humidity + "%";
