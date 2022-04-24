@@ -10,8 +10,48 @@ header {
     background-color: blue ;
     text-align: center;
     border: 5px blue solid;
+    text: white;
+    border-bottom: black solid 2px;
 }
 
-div {
-    border: solid 2px red;
+#submit-button {
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: lightgray;
+}
+
+
+div #current-city-weather {
+    border: 2px solid black;
+    padding-top: 10px;
+    border-top: none;
+}
+
+div #current-city-5day {
+    padding: 10px;
+}
+
+div #day1  {
+    border: 2px solid black;
+    background-color: lightgray;
+}
+
+div #day2  {
+    border: 2px solid black;
+    background-color: lightgray;
+}
+
+div #day3  {
+    border: 2px solid black;
+    background-color: lightgray;
+}
+
+div #day4  {
+    border: 2px solid black;
+    background-color: lightgray;
+}
+
+div #day5  {
+    border: 2px solid black;
+    background-color: lightgray;
 }
