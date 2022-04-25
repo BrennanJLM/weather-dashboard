@@ -1,39 +1,31 @@
-
-
-
-
-
-
-
 //button click
-var formSubmitHandler = function () {
+var formSubmitHandler = async function() {
 
     //get value from input element
-    var cityname = document.querySelector("#city-search").value.trim()
+    var cityname = document.querySelector("#city-search").value.trim();
 
     if (cityname) {
         // clear old content
         //currentWeather.textContent = "";
-        getCityWeather(cityname);
-        
-        document.querySelector("#current-city-weather").setAttribute("class","d-block");
-        document.querySelector("#current-city-5day").setAttribute("class","d-block");
-        //search 
-        let newSearch = document.createElement("li");
-        newSearch.setAttribute("class", "list-group-item");
-        newSearch.innerText = cityname;
-        document.querySelector("#city-search-history .list-group").appendChild(newSearch);
+        await getCityWeather(cityname);      
+
         //save history
         let oldSearch = sessionStorage.getItem("search");
         console.log("search:" +  oldSearch);
         let searchHistory = oldSearch ? JSON.parse(oldSearch) : JSON.parse('{"search":[]}');
-        
         if(searchHistory) {
+			if(searchHistory.search.includes(cityname)) {
+				while(searchHistory.search.includes(cityname)) {
+					searchHistory.search.splice(searchHistory.search.indexOf(cityname), 1);
+				}
+			}
             searchHistory.search.push(cityname);
             sessionStorage.setItem("search", '{"search":["'+ searchHistory.search.join('","') +'"]}');
+			addHistoryButton(cityname);
         }
 
-
+        document.querySelector("#current-city-weather").setAttribute("class","d-block");
+        document.querySelector("#current-city-5day").setAttribute("class","d-block");
     } else {
         //alert user
         alert("Please enter a City name");
@@ -139,57 +131,7 @@ var displayWeather = async function(latitude, longitude) {
             document.querySelector("#day5 .list-group .temperature span").innerText = data.daily[4].temp.day;
             document.querySelector("#day5 .list-group .wind span").innerText = data.daily[4].wind_speed;
             document.querySelector("#day5 .list-group .humidity span").innerText = data.daily[4].humidity;
-          
 
-
- 
-
-
-			
-			
-			// document.querySelector('#current-city-5day ul').appendChild(card1);
-            // document.querySelector('#current-city-5day ul').appendChild(card2);
-			// document.querySelector('#current-city-5day ul').appendChild(card3);
-			// document.querySelector('#current-city-5day ul').appendChild(card4);
-			// document.querySelector('#current-city-5day ul').appendChild(card5);
-
-            
-
-
-            // daily.data[0].temp
-
-
-
-
-
-        // //     Define the addItem() function
-        // // to be called through onclick
-        // function forecast() {
-  
-        //     // Get type of element from form
-        //     let type = document.daily.data
-        //         getElementById("type").value;
-  
-        //     // Get the text/value for the tag
-        //     // from the form
-        //     let value = document.
-        //         getElementById("value").value;
-  
-        //     // createElement() is used for
-        //     // creating a new element
-        //     type
-        //         = document.createElement(type);
-  
-        //     // Use value as textnode in this example
-        //     type.appendChild(
-        //         document.createTextNode(value));
-  
-        //     // Append as child to the parent
-        //     // tag i.e. ol
-        //     document.getElementById(
-        //         "parent").appendChild(type);
-
-        //     }
 
         })
 		.catch(function(err) {
@@ -201,39 +143,49 @@ var displayWeather = async function(latitude, longitude) {
     
 
 
-// var getForecast = function() {
-
-// }
-
-// var DisplayForecast = function() {
-
-    // date.textContent=moment.unix(data.daily[i].dt).format("L");
-    // icon.innerHTML="<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png'>";
-    // temp.textContent= "Temp: " + Math.round(data.daily[i].temp.day) + " °C";
-    // wind.textContent= "Wind: " + kph(data.daily[i].wind_speed) + " KPH";
-    // humidity.textContent= "Humidity: " + data.daily[i].humidity + "%";
-
+    
+var addHistoryButton = async function(cityName) {
+	while(document.querySelector("#city-search-history .list-group .list-group-item input[value='" + cityName + "']")) {
+		document.querySelector("#city-search-history .list-group .list-group-item input[value='" + cityName + "']").parentElement.remove();
+	}
+	//search 
+	let newSearch = document.createElement("li");
+	newSearch.setAttribute("class", "list-group-item");
+	let newButton = document.createElement("input");
+	newButton.setAttribute("type", "button");
+	newButton.value = cityName;
+    newButton.addEventListener("click", function() {
+        document.querySelector("#city-search").value = cityName;
+		formSubmitHandler();
+    });
+	newSearch.append(newButton);
+	document.querySelector("#city-search-history .list-group").prepend(newSearch);
+};
 
 
 
 document.addEventListener('DOMContentLoaded', function(ev) {
 
-    document.querySelector("#submit-button").addEventListener("click", function(event) {
-        event.preventDefault();
-        formSubmitHandler();
-    });
+    document.querySelector("#submit-button")
+		.addEventListener("click", function(event) {
+			event.preventDefault();
+			formSubmitHandler();
+		});
+	document.querySelector("#city-search").addEventListener("keyup", function(event) {
+		// Number 13 is the "Enter" key on the keyboard
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			formSubmitHandler();
+		}
+	});
+	
 
-    //save history
+    //load search history
     let oldSearch = sessionStorage.getItem("search");
     //console.log("search:" +  oldSearch);
     let searchHistory = oldSearch ? JSON.parse(oldSearch) : JSON.parse('{"search":[]}');
     searchHistory.search.forEach(function(el) {
-        //search 
-        let newSearch = document.createElement("li");
-        newSearch.setAttribute("class", "list-group-item");
-        newSearch.innerText = el;
-        document.querySelector("#city-search-history .list-group").appendChild(newSearch);
+		addHistoryButton(el);
     });
 
 });
-
