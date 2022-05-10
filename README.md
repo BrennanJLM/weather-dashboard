@@ -13,9 +13,8 @@ To run the README generator run node index.js (in the terminal) in the root fold
 
 ## Screenshot
 
-![2022-05-10 (2)](https://user-images.githubusercontent.com/98754293/167703153-3a15be77-d31a-40dd-99ca-20682cc59159.png)
+![2022-05-10 (5)](https://user-images.githubusercontent.com/98754293/167703364-e7106c16-106c-47fe-93a0-3678883872aa.png)
 
-    
 ## Collaborators and References
 
 - Git-it-done Project Code
